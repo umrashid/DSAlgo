@@ -1,0 +1,830 @@
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+import java.util.HashMap;
+
+public class Anagrams {
+	// --- Directions
+	// Check to see if two provided strings are anagrams of eachother.
+	// One string is an anagram of another if it uses the same characters
+	// in the same quantity. Only consider characters, not spaces
+	// or punctuation.  Consider capital letters to be the same as lower case
+	// --- Examples
+	//   anagrams('rail safety', 'fairy tales') --> True
+	//   anagrams('RAIL! SAFETY!', 'fairy tales') --> True
+	//   anagrams('Hi there', 'Bye there') --> False
+	public static void main(String[] args) {
+		System.out.println(anagrams("rail safety", "fairy tales")) ;
+		System.out.println(anagrams("RAIL! SAFETY!", "fairy tales"));
+		System.out.println(anagrams("Hi there", "Bye there"));
+
+	}
+
+	public static boolean anagrams(String a, String b){
+		a = a.toLowerCase();
+		b = b.toLowerCase();
+		HashMap<Character, Integer> StringA = new HashMap<Character, Integer>();
+		HashMap<Character, Integer> StringB = new HashMap<Character, Integer>();
+		for(int i = 0; i < a.length(); i++){
+			char key = a.charAt(i);
+			if(key >= (char)(97) && key <= (char)(122)){
+				if(StringA.containsKey(key)){
+					int count = StringA.get(key);
+					count++;
+					StringA.put(key, count);
+				}else{
+					StringA.put(key, 1);
+				}
+			}
+		}
+
+		for(int i = 0; i < b.length(); i++){
+			char key = b.charAt(i);
+			if(key >= (char)(97) && key <= (char)(122)){
+				if(StringB.containsKey(key)){
+					int count = StringB.get(key);
+					count++;
+					StringB.put(key, count);
+				}else{
+					StringB.put(key, 1);
+				}
+			}
+		}
+
+
+		return StringA.equals(StringB);
+	}
+
+}
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+import java.util.Arrays;
+
+public class ArrayChunk {
+	// --- Directions
+	// Given an array and chunk size, divide the array into many subarrays
+	// where each subarray is of length size
+	// --- Examples
+	// chunk([1, 2, 3, 4], 2) --> [[ 1, 2], [3, 4]]
+	// chunk([1, 2, 3, 4, 5], 2) --> [[ 1, 2], [3, 4], [5]]
+	// chunk([1, 2, 3, 4, 5, 6, 7, 8], 3) --> [[ 1, 2, 3], [4, 5, 6], [7, 8]]
+	// chunk([1, 2, 3, 4, 5], 4) --> [[ 1, 2, 3, 4], [5]]
+	// chunk([1, 2, 3, 4, 5], 10) --> [[ 1, 2, 3, 4, 5]]
+
+	public static void main(String[] args) {
+		int[] array = {1,2,3,4,5,6,7,8,9,10};
+		arrayChunk(array, 10);
+
+	}
+
+
+			public static void arrayChunk(int[] number, int subArray){
+			int size = number.length;
+			if(subArray == 0){
+				subArray = 1;
+			}
+			int arrayRow = (int)Math.ceil(size/(subArray*1.0));
+			String subArrays = "[";
+			int count = 1;
+			for(int i = 0; i< number.length; i++){
+				if(count == 1){
+					subArrays += "[ " + number[i];
+					if(i == number.length-1){
+						subArrays += "]";
+					}
+					count++;
+				}else if (count == subArray){
+					subArrays += ", " + number[i] + "]";
+					if(i != number.length-1){
+						subArrays += ",";
+					}
+					count = 1;
+				}else{
+					subArrays += ", " + number[i];
+					if(i == number.length-1){
+						subArrays += "]";
+					}
+					count++;
+				}
+			}
+			subArrays += "]";
+			System.out.println(subArrays);
+
+		}
+
+}
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class ArrayQueue {
+	private int first;
+	private int last;
+	private int[] integers;
+
+
+	public ArrayQueue(int size){
+		integers = new int[size];
+	}
+	public void enqueue(int number){
+		if(last==integers.length){
+			int[] temp = new int[integers.length*2];
+			System.arraycopy(integers, 0, temp, 0,integers.length);
+			integers = temp;
+		}
+
+		integers[last] = number;
+		last++;
+	}
+
+	public void dequeue(){
+		for(int i = 0; i < last-1; i++){
+			integers[i] = integers[i+1];
+		}
+		last--;
+	}
+	public void size(){
+		System.out.println(last);
+	}
+
+	public void peek(){
+		if(last == 0){
+			System.out.println("Empty Stack!");
+		}else{
+			int numberToPop = integers[0];
+			System.out.println(numberToPop);
+		}
+	}
+
+	public void print(){
+		for(int i = 0; i < last; i++){
+			System.out.println(integers[i]);
+		}
+	}
+}
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class ArrayStack {
+
+	private int top = 0;
+	private int[] integers;
+
+
+	public ArrayStack(int size) {
+		integers = new int[size];
+	}
+
+
+	public void push(int number){
+		if(top==integers.length){
+			int[] temp = new int[integers.length*2];
+			System.arraycopy(integers, 0, temp, 0,integers.length);
+			integers = temp;
+		}
+
+		integers[top] = number;
+		top++;
+	}
+
+	public void pop(){
+		if(top == 0){
+			System.out.println("Empty Stack!");
+		}else{
+			int numberToPop = integers[top-1];
+			top = top - 1;
+			integers[top] = 0;
+			System.out.println(numberToPop);
+		}
+	}
+
+	public void peek(){
+		if(top == 0){
+			System.out.println("Empty Stack!");
+		}else{
+			int numberToPop = integers[top-1];
+			System.out.println(numberToPop);
+		}
+	}
+
+	public void size(){
+		System.out.println(top);
+	}
+
+	public void print(){
+		for(int i =top-1; i >=0; i--){
+			System.out.println(integers[i]);
+		}
+	}
+}
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class BinarySearch {
+
+	public static void main(String[] args) {
+		int[] sortedArray = {10,22,33,44,55,66,77,88,90,91,95,99};
+		System.out.println(binarySearch(sortedArray, 0, sortedArray.length, 33));
+
+	}
+
+	public static int binarySearch(int[] array, int start, int end, int searchThis){
+		int mid = (start+end)/2;
+		if(start>=end){
+		return 1111111111;
+		}else{
+			if(searchThis>array[mid]){
+				return binarySearch(array, mid+1, end, searchThis);
+			}else if(searchThis<array[mid]){
+				return binarySearch(array, start, mid-1, searchThis);
+			}else{
+				return mid;
+			}
+		}
+
+	}
+
+}
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class bubbleSort {
+
+	public static void main(String[] args) {
+		int[] array = {20,-15,7,35,1,-22,55,-10,500,45,30,-60, 55};
+		printArray(bubbleSort(array));
+
+
+	}
+	public static int[] bubbleSort(int[] array){
+		int count;
+		do{
+			count = 0;
+			for(int i = 0; i < array.length-1; i++){
+				if(array[i]>array[i+1]){
+					count++;
+					int temp = array[i];
+					array[i] = array[i+1];
+					array[i+1] = temp;
+				}else{
+
+				}
+			}
+		}while(count > 0);
+		return array;
+	}
+
+	public static void printArray(int[] array){
+		String result = "[";
+		for(int i = 0; i < array.length; i++){
+			result += " " + array[i];
+		}
+		result += "]";
+		System.out.println(result);
+	}
+
+}
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class CapitalizeSentence {
+
+	public static void main(String[] args) {
+		capitalize("a shsort sentence");
+
+	}
+
+	public static void capitalize(String message){
+		String[] split = message.split(" ");
+		for(int i = 0; i < split.length; i++){
+			char[] chArray = split[i].toCharArray();
+			chArray[0] = Character.toUpperCase(chArray[0]);
+			split[i] = String.valueOf(chArray);
+		}
+
+		String capatilizedString = "";
+		for(String i : split){
+			if(capatilizedString.equals("")){
+				capatilizedString += i;
+			}else{
+				capatilizedString = capatilizedString + " " + i ;
+			}
+		}
+		System.out.println(capatilizedString);
+	}
+
+}
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class FizzBuzzQuestion {
+	public static void main(String[] args) {
+		fizzBuzz(5);
+		fizzBuzz(20);
+		fizzBuzz(100);
+		fizzBuzz(500);
+
+	}
+
+	public static void fizzBuzz(int n){
+		for(int i = 1; i <= n; i++){
+			if(i % 3 == 0 && i % 5 == 0){
+				System.out.println("FizzBuzz");
+			}else if(i % 3 == 0){
+				System.out.println("Fizz");
+			}else if(i % 5 == 0){
+				System.out.println("Buzz");
+			}else{
+				System.out.println(i);
+			}
+		}
+	}
+}
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class insertionSort {
+
+	public static void main(String[] args) {
+		//int[] array = {-15,20,35,7,55,1,-22};
+		int[] array = {15, 5, 4, 18, 12, 19, 14, 10, 8, 20};
+		printArray(insertionSort(array));
+
+	}
+
+	public static int[] insertionSort(int[] array){
+
+		for(int i = 1; i <array.length; i++){
+			int lastChangedIndex = -1;
+			int temp = array[i];
+			for(int j = i-1; j >=0 ; j--){
+				if(temp < array[j]){
+					array[j+1] = array[j];
+					lastChangedIndex = j;
+				}
+			}
+			if(lastChangedIndex >= 0){
+				array[lastChangedIndex] = temp;
+			}
+		}
+		return array;
+	}
+	public static void printArray(int[] array){
+		String result = "[";
+		for(int i = 0; i < array.length; i++){
+			result += " " + array[i];
+		}
+		result += "]";
+		System.out.println(result);
+	}
+
+}
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+import java.util.HashMap;
+
+public class MaxChar {
+	// --- Directions
+	// Given a string, return the character that is most
+	// commonly used in the string.
+	// --- Examples
+	// maxChar("abcccccccd") === "c"
+	// maxChar("apple 1231111") === "1"
+	public static void main(String[] args) {
+		System.out.println(maxChar("apple 1231111"));
+
+	}
+
+	public static char maxChar(String message){
+		char[] messageChar = message.toCharArray();
+		char maxKey = ' ';
+		int maxValue = 0;
+		HashMap<Character, Integer> lettersCount = new HashMap<Character, Integer>();
+		for(char letters : messageChar){
+			if(lettersCount.containsKey(letters)){
+				int count = lettersCount.get(letters);
+				count++;
+				lettersCount.put(letters, count);
+			}else{
+				lettersCount.put(letters, 1);
+			}
+			if(maxValue < lettersCount.get(letters)){
+				maxValue = lettersCount.get(letters);
+				maxKey = letters;
+			}
+		}
+		//For Printing the HashMap Purposes
+		for(char i: lettersCount.keySet()){
+			System.out.println(i + " : " + lettersCount.get(i));
+
+		}
+		return maxKey;
+	}
+
+}
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class MergeSort {
+
+	public static void main(String[] args) {
+		int[] array = {20,35,-15,7,55,1,-22};
+
+		mergeSort(array,0,array.length);
+		printArray(array);
+
+	}
+
+	public static void mergeSort(int[] array, int start, int end){
+		if(end-start<2){
+			return;
+		}
+		int mid = (start+end)/2;
+		mergeSort(array,start,mid);
+		mergeSort(array,mid,end);
+		merge(array,start,mid,end);
+	}
+
+	public static void merge(int[] array, int start, int mid, int end){
+		if(array[mid-1]<= array[mid]){
+			return;
+		}
+
+		int i = start;
+		int j = mid;
+		int tempIndex = 0;
+		int[] temp = new int[end-start];
+		while(i < mid && j < end){
+			if(array[i]<=array[j]){
+				temp[tempIndex++] = array[i++];
+			}else{
+				temp[tempIndex++] = array[j++];
+
+			}
+		}
+
+		System.arraycopy(array, i, array, start + tempIndex, mid-i);
+		System.arraycopy(temp, 0, array, start, tempIndex);
+	}
+
+	public static void printArray(int[] array){
+		String result = "[";
+		for(int i = 0; i < array.length; i++){
+			result += " " + array[i];
+		}
+		result += "]";
+		System.out.println(result);
+	}
+
+}
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class Palindromes {
+
+	public static void main(String[] args) {
+		System.out.println(palindrome("aabbaa"));
+		System.out.println(palindrome("redivider"));
+		System.out.println(palindrome("deified"));
+		System.out.println(palindrome("civic"));
+		System.out.println(palindrome("kayaka"));
+
+	}
+	public static String reverseString(String message){
+		String reverseString = "";
+		char[] messageChar = message.toCharArray();
+		for(int i = (messageChar.length - 1) ; i >= 0; i--){
+			reverseString += messageChar[i];
+		}
+		return reverseString;
+	}
+	public static boolean palindrome(String message){
+		String reversedString = reverseString(message);
+		return message.equals(reversedString);
+
+	}
+}
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class Recursion {
+
+	public static void main(String[] args) {
+		System.out.println(factorial(10));
+		System.out.println(fib(10));
+	}
+	private static int factorial(int number){
+		if(number == 1){
+			return 1;
+		}else{
+			return number*factorial(number - 1);
+		}
+	}
+	private static int fib(int number){
+		if(number < 1){
+			return 0;
+		}else if (number == 1 || number == 2){
+			return number-1;
+		}else{
+			return fib(number-1) +  fib(number-2);
+		}
+	}
+}
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+import java.util.*;
+public class ReverseInt {
+	// --- Directions
+	// Given an integer, return an integer that is the reverse
+	// ordering of numbers.
+	// --- Examples
+	//   reverseInt(15) === 51
+	//   reverseInt(981) === 189
+	//   reverseInt(500) === 5
+	//   reverseInt(-15) === -51
+	//   reverseInt(-90) === -9
+
+	public static void main(String[] args) {
+		int number1 = -23;
+		System.out.println(reverseIntUsingString(number1));
+
+	}
+	public static int reverseIntUsingString(int message){
+
+		String strToInt = Integer.toString(message);
+		String reverseString = "";
+		char[] messageChar = strToInt.toCharArray();
+		for(int i = (messageChar.length - 1) ; i >= 0; i--){
+			reverseString += messageChar[i];
+		}
+		// Can also use Math.signum to see if its a positve number or negative
+		if(reverseString.endsWith("-")){
+			reverseString = reverseString.substring(0, reverseString.length() - 1);
+			return Integer.parseInt(reverseString) * -1;
+		}else{
+			return Integer.parseInt(reverseString);
+		}
+	}
+
+}
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class ReverseString {
+
+	public static void main(String[] args) {
+
+		System.out.println(reverseString("Hello"));
+		System.out.println(reverseString("apple"));
+		System.out.println(reverseString("Greetings"));
+		System.out.println(reverseString("Umair"));
+	}
+
+	public static String reverseString(String message){
+		String reverseString = "";
+		char[] messageChar = message.toCharArray();
+		for(int i = (messageChar.length - 1) ; i >= 0; i--){
+			reverseString += messageChar[i];
+		}
+		return reverseString;
+	}
+
+}
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class selectionSort {
+
+	public static void main(String[] args) {
+		int[] array = {20,-15,7,35,1,-22,55,-10,55,-10};
+		printArray(selectionSort(array));
+	}
+
+	public static int[] selectionSort(int[] array){
+		for(int i = 0; i < array.length; i++){
+			//int minValue = array[i];
+			for(int j = i; j < array.length; j++){
+				if(array[j]</*minValue*/array[i]){
+					//minValue = array[j];
+					int temp = array[j];
+					array[j] = array[i];
+					array[i] = temp;
+				}
+			}
+		}
+		return array;
+	}
+
+	public static void printArray(int[] array){
+		String result = "[";
+		for(int i = 0; i < array.length; i++){
+			result += " " + array[i];
+		}
+		result += "]";
+		System.out.println(result);
+	}
+
+
+
+}
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class Tree {
+	private TreeNode root;
+
+	public void insert(int value){
+		if(root == null){
+			root = new TreeNode(value);
+		}else{
+			root.insert(value);
+		}
+	}
+
+	public void traverseInOrder(){
+		if(root != null){
+			root.transverseInOrder();
+		}
+	}
+
+	public TreeNode get(int value){
+		if(root != null){
+			return root.get(value);
+		}
+		return null;
+	}
+
+}
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class TreeNode {
+	private int data;
+	private TreeNode leftChild;
+	private TreeNode rightChild;
+
+	public TreeNode(int data){
+		this.data = data;
+
+	}
+
+	public void insert(int value){
+		if(value == data){
+			return;
+		}
+		if(value < data){
+			if(leftChild == null){
+				leftChild = new TreeNode(value);
+			}else{
+				leftChild.insert(value);
+			}
+		}else{
+			if(rightChild == null){
+				rightChild = new TreeNode(value);
+			}else{
+				rightChild.insert(value);
+			}
+		}
+
+	}
+
+	public void transverseInOrder(){
+		if(leftChild != null){
+			leftChild.transverseInOrder();
+		}
+		System.out.println("Data = " + data + ", ");
+		if(rightChild != null){
+			rightChild.transverseInOrder();
+		}
+	}
+
+	public TreeNode get(int value){
+		if(value == data){
+			return this;
+		}
+		if(value< data){
+			if(leftChild != null){
+				return leftChild.get(value);
+			}else if(rightChild != null){
+				return rightChild.get(value);
+			}
+		}
+		return null;
+	}
+
+	public int getData() {
+		return data;
+	}
+
+	public void setData(int data) {
+		this.data = data;
+	}
+
+	public TreeNode getLeftChild() {
+		return leftChild;
+	}
+
+	public void setLeftChild(TreeNode leftChild) {
+		this.leftChild = leftChild;
+	}
+
+	public TreeNode getRightChild() {
+		return rightChild;
+	}
+
+	public void setRightChild(TreeNode rightChild) {
+		this.rightChild = rightChild;
+	}
+
+}
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+public class TreeMain {
+
+	public static void main(String[] args) {
+		Tree inTree = new Tree();
+		inTree.insert(25);
+		inTree.insert(20);
+		inTree.insert(15);
+		inTree.insert(27);
+		inTree.insert(30);
+		inTree.insert(29);
+		inTree.insert(26);
+		inTree.insert(22);
+		inTree.insert(32);
+
+		inTree.traverseInOrder();
+
+	}
+
+}
